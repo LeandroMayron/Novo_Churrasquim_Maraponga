@@ -34,6 +34,16 @@ yarn add @supabase/supabase-js @xyzsola/react-native-thermal-printer @expo/vecto
 
 ---
 
+### Passo 3.5: Verificar e Recriar Assets (Imagens e Fontes)
+
+**Este é o passo mais importante para corrigir o erro de build atual.** Para evitar problemas com arquivos corrompidos do projeto antigo, é crucial recriar ou re-exportar os assets principais.
+
+1.  **Imagens:** Localize os arquivos de imagem originais (como logos e ícones) e exporte-os novamente usando um editor de imagens (Figma, Photoshop, etc.). Salve-os no formato correto (ex: PNG).
+2.  **Fontes:** Se usar fontes customizadas, baixe novamente os arquivos (`.ttf`, `.otf`) de suas fontes originais.
+3.  Substitua os assets na pasta de assets do seu novo projeto (provavelmente `./assets/images`) pelas versões novas e limpas que você acabou de gerar.
+
+---
+
 ### Passo 4: Preparar o Ambiente Nativo (Bare Workflow)
 
 Como utilizamos a biblioteca de impressão térmica (`@xyzsola/react-native-thermal-printer`), que requer código nativo, precisamos gerar as pastas `android` e `ios`.
@@ -52,15 +62,7 @@ npx expo prebuild
     Abra o arquivo `android/build.gradle` e verifique se o repositório `maven { url 'https://www.jitpack.io' }` está presente dentro do bloco `allprojects { repositories { ... } }`. O `prebuild` geralmente já faz isso, mas é bom confirmar.
 
 2.  **Adicionar Permissões de Bluetooth:**
-    Abra o arquivo `android/app/src/main/AndroidManifest.xml` e adicione as seguintes permissões dentro da tag `<manifest>` (antes da tag `<application>`):
-
-    ```xml
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30" />
-    ```
+    As permissões de Bluetooth são adicionadas automaticamente pelo config plugin `plugins/withBluetoothPermissions.js`, que já está configurado no `app.json`. Nenhuma ação manual é necessária. O comando `npx expo prebuild` cuida de tudo.
 
 ---
 
